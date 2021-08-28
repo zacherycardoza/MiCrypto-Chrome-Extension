@@ -1,0 +1,28 @@
+:root{
+    --colorOne: #222831;
+    --colorTwo: #393E46;
+    --colorThree: #FFD369;
+    --colorFour: #EEEEEE;
+}
+body{
+    height: 500px;
+    width: 250px;
+    background-color: var(--colorOne);
+    color: var(--colorThree);
+}
+h1{
+  text-align: center;
+}
+button {
+    height: 30px;
+    width: 30px;
+    outline: none;
+    margin: 10px;
+    border: none;
+    border-radius: 2px;
+    display: none;
+  } 
+  button.current {
+    box-shadow: 0 0 0 2px white,
+                0 0 0 4px black;
+}
