@@ -1,29 +1,10 @@
-// Initialize button with user's preferred color
+//#region Variables
 let changeColor = document.getElementById("changeColor");
 var refreshButton = document.getElementById("refreshButton");
 var etherPrice = document.getElementById("etherPrice");
 var bitcoinPrice = document.getElementById("bitcoinPrice");
 var stellarPrice = document.getElementById("stellarPrice");
 var cardanoPrice = document.getElementById("cardanoPrice");
-
-//#region not my code
-chrome.storage.sync.get("color", ({ color }) => {
-    changeColor.style.backgroundColor = color;
-});
-// When the button is clicked, inject setPageBackgroundColor into current page
-changeColor.addEventListener("click", async () => {
-    var [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  
-    chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        function: setPageBackgroundColor,
-        });
-    });
-    function setPageBackgroundColor() {
-        chrome.storage.sync.get("color", ({ color }) => {
-        document.body.style.backgroundColor = color;
-        });
-    };
 //#endregion
 
 //#region API Calls
@@ -37,9 +18,7 @@ function getAndSetEtherPrice() {
     })
     .then(res => res.json())
     .then(data => {
-        console.log(data);
-        console.log(data["Realtime Currency Exchange Rate"]["5. Exchange Rate"]);
-        etherPrice.innerHTML = "ETH: " + data["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
+        etherPrice.innerHTML = "ETH: $" + (Math.round((data["Realtime Currency Exchange Rate"]["5. Exchange Rate"])*Math.pow(10,2))/Math.pow(10,2)).toFixed(2);
     });
 }
 function getAndSetBitcoinPrice() {
@@ -52,9 +31,7 @@ function getAndSetBitcoinPrice() {
     })
     .then(res => res.json())
     .then(data => {
-        console.log(data);
-        console.log(data["Realtime Currency Exchange Rate"]["5. Exchange Rate"]);
-        bitcoinPrice.innerHTML = "BTC: " + data["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
+        bitcoinPrice.innerHTML = "BTC: $" + (Math.round((data["Realtime Currency Exchange Rate"]["5. Exchange Rate"])*Math.pow(10,2))/Math.pow(10,2)).toFixed(2);
     });
 }
 function getAndSetStellarPrice() {
@@ -67,9 +44,7 @@ function getAndSetStellarPrice() {
     })
     .then(res => res.json())
     .then(data => {
-        console.log(data);
-        console.log(data["Realtime Currency Exchange Rate"]["5. Exchange Rate"]);
-        stellarPrice.innerHTML = "XLM: " + data["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
+        stellarPrice.innerHTML = "XLM: $" + (Math.round((data["Realtime Currency Exchange Rate"]["5. Exchange Rate"])*Math.pow(10,2))/Math.pow(10,2)).toFixed(2);
     });
 }
 function getAndSetCardanoPrice() {
@@ -82,19 +57,20 @@ function getAndSetCardanoPrice() {
     })
     .then(res => res.json())
     .then(data => {
-        console.log(data);
-        console.log(data["Realtime Currency Exchange Rate"]["5. Exchange Rate"]);
-        cardanoPrice.innerHTML = "ADA: " + data["Realtime Currency Exchange Rate"]["5. Exchange Rate"];
+        cardanoPrice.innerHTML = "ADA: $" + (Math.round((data["Realtime Currency Exchange Rate"]["5. Exchange Rate"])*Math.pow(10,2))/Math.pow(10,2)).toFixed(2);
     });
 }
 //#endregion
 
-refreshButton.addEventListener("click", getAndSetEtherPrice);
+function refreshPrices() {
+    getAndSetEtherPrice();
+    getAndSetBitcoinPrice();
+    getAndSetStellarPrice();
+    getAndSetCardanoPrice();
+}
+
+/*
 getAndSetEtherPrice();
-setInterval(getAndSetEtherPrice, 60005);
 getAndSetBitcoinPrice();
-setInterval(getAndSetBitcoinPrice, 60005);
 getAndSetStellarPrice();
-setInterval(getAndSetStellarPrice, 60005);
-getAndSetCardanoPrice();
-setInterval(getAndSetCardanoPrice, 60005);
+getAndSetCardanoPrice();*/
