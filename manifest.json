@@ -8,17 +8,16 @@
   },
   "permissions": ["storage", "activeTab", "scripting"],
   "action": {
-    "default_popup": "popup.html",
+    "default_popup": "Pages/popup.html",
     "default_icon": {
-      "32": "/images/atom32.png",
-      "64": "/images/atom64.png",
-      "128": "/images/atom128.png"
+      "32": "Resources/IMG/atom32.png",
+      "64": "Resources/IMG/atom64.png",
+      "128": "Resources/IMG/atom128.png"
     }
   },
   "icons": {
-    "32": "/images/atom32.png",
-    "64": "/images/atom64.png",
-    "128": "/images/atom128.png"
-  },
-  "options_page": "options.html"
+    "32": "Resources/IMG/atom32.png",
+    "64": "Resources/IMG/atom64.png",
+    "128": "Resources/IMG/atom128.png"
+  }
 }

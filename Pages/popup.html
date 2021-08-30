@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../Resources/CSS/popup.css">
+        </head>
+    <body>
+        <div id="headerBox">
+            <h1 id="header">MiCrypto Tracker</h1>
+            </div>
+        <div id="trackedCurrencyListContainer">
+            <div id="trackedCurrencyListOptionsBarContainer">
+                <div id="trackedCurrencyListMyWalletButtonContainer">
+                    <a href="Pages/wallet.html"><button id="trackedCurrencyListMyWalletButton">My Wallet</button></a>
+                    </div>
+                <div id="trackedCurrencyListAddCurrencyButtonContainer">
+                    <button id="trackedCurrencyListAddCurrencyButton">+</button>
+                    </div>
+                <div id="trackedCurrencyListRemoveCurrencyButtonContainer">
+                    <button id="trackedCurrencyListRemoveCurrencyButton">-</button>
+                    </div>
+                <div id="trackedCurrencyListSelectConvertCurrencyDropDown">
+                    <select name="currencyDropDown">
+                        <option value="CAD">CAD</option>
+                        <option value="USD">USD</option>
+                        <option value="AUS">AUS</option>
+                        </select>
+                    </div>
+                </div>
+            <!--#region Example Currency Container -->
+            <div class="currencyContainer">
+                <div class="currencyLogoContainer">
+                    <img src="../Resources/IMG/ethereumLogo.png" alt="" class="currencyLogo">
+                    </div>
+                <div class="currencyNameContainer">
+                    <p class="currencyName">Etherium</p>
+                    </div>
+                <div class="currencyOneUnitLabelContainer">
+                    <p>1 ETH</p>
+                    </div>
+                <div class="currencyOneUnitConvertedContainer">
+                    <p id="etherPrice" class="currencyOneUnitConverted">4028.41 CAD</p>
+                    </div>
+                <div class="currencySymbolContainer">
+                    <p class="currencySymbol">[ETH]</p>
+                    </div>
+                <div class="currencyWalletLabelContainer">
+                    <p>0.167 ETH</p>
+                    </div>
+                <div class="currencyWalletConvertedContainer">
+                    <p class="currencyWalletConverted">670.69 CAD</p>
+                    </div>
+                </div>
+            
+            <div class="currencyContainer">
+                <div class="currencyLogoContainer">
+                    <img src="../Resources/IMG/stellarLogo.png" alt="" class="currencyLogo">
+                    </div>
+                <div class="currencyNameContainer">
+                    <p class="currencyName">Stellar</p>
+                    </div>
+                <div class="currencyOneUnitLabelContainer">
+                    <p>1 XLM</p>
+                    </div>
+                <div class="currencyOneUnitConvertedContainer">
+                    <p id="etherPrice" class="currencyOneUnitConverted">60,028.41 CAD</p>
+                    </div>
+                <div class="currencySymbolContainer">
+                    <p class="currencySymbol">[XLM]</p>
+                    </div>
+                <div class="currencyWalletLabelContainer">
+                    <p>0.092 XLM</p>
+                    </div>
+                <div class="currencyWalletConvertedContainer">
+                    <p class="currencyWalletConverted">4670.69 CAD</p>
+                    </div>
+                    <!--#endregion-->
+                </div>
+            </div>
+    <script src="../Resources/JS/popup.js"></script>
+    </body>
+</html>
