@@ -1,25 +1,22 @@
 :root{
-    --colorOne: rgb(59,48,85);
-    --colorTwo: #16151d;
-    --colorThree: rgb(255,208,90);
-    --colorFour: #EEEEEE;
-    --colorFive: #3E432E;
+    --main: #16151d;
+    --panelColor: rgb(97, 79, 141);
     --greyy: rgb(88, 85, 104);
     --whitee: rgb(218, 216, 236);
 }
 html{
-  font-family: monospace;
   width: 350px;
   margin: 0;
   padding: 0;
-  background-color: var(--colorTwo);
+  background-color: var(--main);
 }
 body{
+  font-family: 'Inconsolata', monospace;
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--colorTwo);
+  background-color: var(--main);
   color: var(--whitee);
   padding-bottom: 5px;
 }
@@ -28,8 +25,38 @@ p {
   padding: 0;
 }
 #headerBox{
-  background-color: var(--colorTwo);
+  background-color: var(--main);
   margin-left: 2.5%;
+  display: grid;
+  grid-template-rows: 1fr, 1fr;
+  grid-template-columns: 1fr 5fr 1fr;
+}
+#headerImageContainer {
+  grid-column: 1/ span 1;
+  grid-row: 1/ span 2;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  padding-top: 5px;
+}
+#headerTextContainer {
+  grid-column: 2/ span 1;
+  grid-row: 1/ span 2;
+}
+#headerSettingsIconContainer {
+  grid-column: 3/ span 1;
+  grid-row: 1/ span 2;
+  display: flex;
+}
+#headerSettingsIconContainer button {
+  background-color: var(--main);
+  border: none;
+  padding: 0;
+  align-self: center;
+  margin-left: 25%;
+}
+#headerSettingsIconContainer button:hover {
+
 }
 #trackedCurrencyListOptionsBarContainer {
   display: flex;
@@ -43,7 +70,7 @@ p {
   background-color: var(--greyy);
   color: var(--whitee);
   border-radius: 5px;
-  border: 1px solid var(--whitee);
+  border: 1px solid var(--panelColor);
 }
 #trackedCurrencyListContainer {
   display: grid;
@@ -60,11 +87,11 @@ p {
   grid-template-columns: 1fr 1.5fr 1.5fr 2fr;
   background-color: var(--greyy);
   border-radius: 5px;
-  border: 1px solid var(--whitee);
+  border: 1px solid var(--panelColor);
   padding-top: 5px;
 }
 #trackedCurrencyListContainer .currencyContainer:hover {
-  background-color: rgb(0, 51, 16);
+  background-color: rgb(0, 102, 32);
 }
 .currencyLogoContainer{
   display: flex;
@@ -72,10 +99,10 @@ p {
   grid-row: 1/ span 2;
 }
 .currencyLogoContainer img {
-  width: 75%;
-  height: 75%;
+  width: 65%;
+  height: 65%;
   align-self: center;
-  margin-left: 12.5%;
+  margin-left: 17.5%;
 }
 .currencyNameContainer p {
   font-size: medium;

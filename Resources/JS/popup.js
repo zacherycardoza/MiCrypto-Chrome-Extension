@@ -69,8 +69,14 @@ function refreshPrices() {
     getAndSetCardanoPrice();
 }
 
-/*
-getAndSetEtherPrice();
-getAndSetBitcoinPrice();
-getAndSetStellarPrice();
-getAndSetCardanoPrice();*/
+(function ($) {
+    $(document).ready(function () {
+        $("#settingsButton").hover(
+            function () {
+                $("#settingsIcon").attr("src", "../Resources/IMG/settingsHover.png"); },
+            function () {
+                $("#settingsIcon").attr("src", "../Resources/IMG/settings.png"); }
+            );
+    });
+})(jQuery);
+

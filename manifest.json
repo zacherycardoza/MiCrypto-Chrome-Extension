@@ -10,14 +10,14 @@
   "action": {
     "default_popup": "Pages/popup.html",
     "default_icon": {
-      "32": "Resources/IMG/atom32.png",
-      "64": "Resources/IMG/atom64.png",
-      "128": "Resources/IMG/atom128.png"
+      "32": "Resources/IMG/hacker32.png",
+      "64": "Resources/IMG/hacker64.png",
+      "128": "Resources/IMG/hacker128.png"
     }
   },
   "icons": {
-    "32": "Resources/IMG/atom32.png",
-    "64": "Resources/IMG/atom64.png",
-    "128": "Resources/IMG/atom128.png"
+    "32": "Resources/IMG/hacker32.png",
+    "64": "Resources/IMG/hacker64.png",
+    "128": "Resources/IMG/hacker128.png"
   }
 }
