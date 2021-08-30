@@ -1,0 +1,66 @@
+:root{
+    --main: #16151d;
+    --panelColor: rgb(97, 79, 141);
+    --greyy: rgb(88, 85, 104);
+    --whitee: rgb(218, 216, 236);
+}
+html{
+    width: 350px;
+    height: 500px;
+    margin: 0;
+    padding: 0;
+    background-color: var(--main);
+}
+body{
+    font-family: 'Inconsolata', monospace;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: var(--main);
+    color: var(--whitee);
+    padding-bottom: 5px;
+}
+
+/* Header */
+#headerBox{
+  background-color: var(--main);
+  margin-left: 2.5%;
+  display: grid;
+  grid-template-rows: 1fr, 1fr;
+  grid-template-columns: 1fr 5fr 1fr;
+}
+#headerImageContainer {
+  grid-column: 1/ span 1;
+  grid-row: 1/ span 2;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  padding-top: 5px;
+}
+#headerTextContainer {
+  grid-column: 2/ span 1;
+  grid-row: 1/ span 2;
+  padding-left: 10px;
+}
+#headerSettingsIconContainer {
+  grid-column: 3/ span 1;
+  grid-row: 1/ span 2;
+  display: flex;
+}
+#headerSettingsIconContainer button {
+  background-color: var(--main);
+  border: none;
+  padding: 0;
+  padding-top: 5px;
+  align-self: center;
+  margin-left: 25%;
+}
+
+/* Supported Cryptocurrencies List */
+#supportedCryptocurrencyListContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    width: 95%;
+    margin-left: 2.5%;
+}

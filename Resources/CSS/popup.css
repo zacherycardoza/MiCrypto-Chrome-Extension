@@ -15,7 +15,6 @@ body{
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
   background-color: var(--main);
   color: var(--whitee);
   padding-bottom: 5px;
@@ -42,6 +41,7 @@ p {
 #headerTextContainer {
   grid-column: 2/ span 1;
   grid-row: 1/ span 2;
+  padding-left: 10px;
 }
 #headerSettingsIconContainer {
   grid-column: 3/ span 1;
@@ -52,11 +52,9 @@ p {
   background-color: var(--main);
   border: none;
   padding: 0;
+  padding-top: 5px;
   align-self: center;
   margin-left: 25%;
-}
-#headerSettingsIconContainer button:hover {
-
 }
 #trackedCurrencyListOptionsBarContainer {
   display: flex;
