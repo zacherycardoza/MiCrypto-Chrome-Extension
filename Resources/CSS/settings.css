@@ -1,12 +1,12 @@
 :root{
     --main: #16151d;
-    --panelColor: rgb(97, 79, 141);
+    --panelColor: rgb(71, 57, 102);
     --greyy: rgb(88, 85, 104);
     --whitee: rgb(218, 216, 236);
 }
 html{
     width: 350px;
-    height: 500px;
+    height: 400px;
     margin: 0;
     padding: 0;
     background-color: var(--main);
@@ -59,8 +59,54 @@ body{
 /* Supported Cryptocurrencies List */
 #supportedCryptocurrencyListContainer {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 5px;
     width: 95%;
     margin-left: 2.5%;
+}
+#supportedCryptocurrencyHeaderContainer {
+    grid-column: 1/ span 3;
+    grid-row: 1/ span 1;
+}
+.supportedCurrencyContainer {
+    height: 80px;
+    background-color: var(--greyy);
+    border-radius: 5px;
+    border: 1px solid var(--panelColor);
+    padding-top: 5px;
+    display: grid;
+    gap: 2.5px;
+    grid-template-columns: 1fr;
+    grid-template-rows: .75fr 1fr 1fr;
+}
+.supportedCurrencyContainer > div {
+    margin: 0;
+    padding: 0;
+}
+.supportedCurrencyContainer img {
+    width: 56px;
+    height: 56px;
+    margin-left: 22.5%;
+}
+#amountOfCurrencyOwnedContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+#amountOfCurrencyOwnedInput {
+    width: 100%;
+    height: 90%;
+    background-color: var(--greyy);
+    border: 1px solid var(--greyy);
+}
+h3, p{
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+.supportedCurrencyContainer:hover {
+    background-color: rgb(0, 102, 32);
+}
+.active {
+    background-color: rgb(0, 102, 32);
 }

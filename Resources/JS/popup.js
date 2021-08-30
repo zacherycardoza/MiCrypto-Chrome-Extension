@@ -1,10 +1,9 @@
 //#region Variables
-let changeColor = document.getElementById("changeColor");
-var refreshButton = document.getElementById("refreshButton");
 var etherPrice = document.getElementById("etherPrice");
 var bitcoinPrice = document.getElementById("bitcoinPrice");
 var stellarPrice = document.getElementById("stellarPrice");
 var cardanoPrice = document.getElementById("cardanoPrice");
+var supportedCryptoCurrencies = ["Ethereum", "Bitcoin", "Stellar", "Cardano"];
 //#endregion
 
 //#region API Calls
@@ -85,3 +84,10 @@ function refreshPrices() {
     });
 })(jQuery);
 
+(function ($) {
+    $(document).ready(function () {
+        supportedCryptoCurrencies.forEach(element => {
+            console.log(element + ": " + localStorage.getItem(element));
+        });     
+    });
+})(jQuery);

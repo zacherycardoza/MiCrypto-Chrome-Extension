@@ -56,6 +56,19 @@ p {
   align-self: center;
   margin-left: 25%;
 }
+
+#miCoinsHeaderContainer {
+  margin: 0;
+  padding: 0;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+#miCoinsHeaderContainer h3 {
+  margin: 0;
+  padding: 0;
+  margin-left: 2.5%;
+}
+
 #trackedCurrencyListOptionsBarContainer {
   display: flex;
   flex-direction: row;
@@ -86,7 +99,6 @@ p {
   background-color: var(--greyy);
   border-radius: 5px;
   border: 1px solid var(--panelColor);
-  padding-top: 5px;
 }
 #trackedCurrencyListContainer .currencyContainer:hover {
   background-color: rgb(0, 102, 32);
@@ -97,10 +109,10 @@ p {
   grid-row: 1/ span 2;
 }
 .currencyLogoContainer img {
-  width: 65%;
-  height: 65%;
+  width: 75%;
+  height: 75%;
   align-self: center;
-  margin-left: 17.5%;
+  margin-left: 12.5%;
 }
 .currencyNameContainer p {
   font-size: medium;

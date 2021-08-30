@@ -13,3 +13,30 @@
                 );        
     });
 })(jQuery);
+
+(function ($) {
+    var supportedCryptoCurrencies = ["Ethereum", "Bitcoin", "Stellar", "Cardano"];
+    $(document).ready(function () {
+        supportedCryptoCurrencies.forEach(element => {
+            if ( localStorage.getItem(element) == "active" ) {
+                var _ = document.getElementsByName(element)[0];
+                $(_).addClass("active");
+            }
+        });
+    });
+})(jQuery);
+
+(function ($) {
+    $(document).ready(function () {
+        $(".supportedCurrencyContainer").click(function () {
+            if ( $(this).hasClass("active") ) {
+                $(this).removeClass("active");
+                localStorage.setItem($(this).attr("name"), "inactive");
+            }
+            else {
+                $(this).addClass("active");
+                localStorage.setItem($(this).attr("name"), "active");
+            }
+        });
+    });
+})(jQuery);
