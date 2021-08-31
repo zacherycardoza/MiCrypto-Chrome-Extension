@@ -69,20 +69,6 @@ p {
   margin-left: 2.5%;
 }
 
-#trackedCurrencyListOptionsBarContainer {
-  display: flex;
-  flex-direction: row;
-}
-#trackedCurrencyListOptionsBarContainer > #trackedCurrencyListSelectConvertCurrencyDropDown, #trackedCurrencyListRemoveCurrencyButton, #trackedCurrencyListAddCurrencyButton {
-  margin-right: 0;
-  margin-left: auto;
-}
-#trackedCurrencyListOptionsBarContainer > #trackedCurrencyListSelectConvertCurrencyDropDown select, button{
-  background-color: var(--greyy);
-  color: var(--whitee);
-  border-radius: 5px;
-  border: 1px solid var(--panelColor);
-}
 #trackedCurrencyListContainer {
   display: grid;
   gap: 5px;
@@ -98,7 +84,6 @@ p {
   grid-template-columns: 1fr 1.5fr 1.5fr 2fr;
   background-color: var(--greyy);
   border-radius: 5px;
-  border: 1px solid var(--panelColor);
 }
 #trackedCurrencyListContainer .currencyContainer:hover {
   background-color: rgb(0, 102, 32);
@@ -120,4 +105,5 @@ p {
 .currencyWalletConvertedContainer, .currencyOneUnitConvertedContainer, .currencyOneUnitLabelContainer, .currencyWalletLabelContainer{
   text-align: right;
   padding-right: 5px;
+  padding-top: 2px;
 }
