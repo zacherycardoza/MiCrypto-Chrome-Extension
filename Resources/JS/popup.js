@@ -1,9 +1,3 @@
-//#region Variables
-var etherPrice = document.getElementById("etherPrice");
-var bitcoinPrice = document.getElementById("bitcoinPrice");
-var stellarPrice = document.getElementById("stellarPrice");
-var cardanoPrice = document.getElementById("cardanoPrice");
-
 // Get Settings Information 
 var settingsInformation;
 function saveSettings(settings) {
@@ -21,9 +15,14 @@ function saveSettings(settings) {
                                             {name: "Bitcoin", symbol: "BTC", active: "false", amountOwned: 0.008342, lastPrice: 0.00, newPrice: 0.0},
                                             {name: "Stellar", symbol: "XLM", active: "false", amountOwned: 54.434463, lastPrice: 0.00, newPrice: 0.0},
                                             {name: "Cardano", symbol: "ADA", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
+                                            {name: "BinanceCoin", symbol: "BNB", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
+                                            {name: "Tether", symbol: "USDT", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
                                             {name: "Dogecoin", symbol: "DOGE", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
+                                            {name: "Maker", symbol: "MKR", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
+                                            {name: "Sushi", symbol: "SUSHI", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
+                                            {name: "ChainLink", symbol: "LINK", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
                                             {name: "Ripple", symbol: "XRP", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0}],
-                supportedFiatCurrencies: ["CAD", "USD", "EUR", "GBP", "INR", "CNY"],
+                supportedFiatCurrencies: ["CAD", "USD", "EUR", "GBP", "INR", "CNY", "KRW", "HKD", "TWD", "AUD"],
                 activeFiatCurrency: "USD"
             };
             saveSettings(settingsInformation);
@@ -51,7 +50,6 @@ function saveSettings(settings) {
 
 (function ($) {
     var alphaVantageAPIKey = "21NUI9FB9KOIO6TM";
-    
     function CreateTrackedCurrencyContainer(currency) {
         //#region new container
         var newCurrencyContainer = document.createElement("div");
@@ -63,7 +61,7 @@ function saveSettings(settings) {
         $(newCurrencyLogoContainer).addClass("currencyLogoContainer");
         var logo = document.createElement("img");
         $(logo).addClass("currencyLogo");
-        var srcString = "../Resources/IMG/" + currency.name + "Logo.png";
+        var srcString = "../Resources/IMG/CryptoLogos/" + currency.name + "Logo.png";
         $(logo).attr("src", srcString);
         $(logo).attr("alt", currency.name);
         newCurrencyLogoContainer.appendChild(logo);
@@ -87,7 +85,7 @@ function saveSettings(settings) {
         newCurrencyOneUnitLabelContainer.appendChild(oneUnitLabel);
         newCurrencyContainer.appendChild(newCurrencyOneUnitLabelContainer);
         //#endregion
-        //#region (Not Done) one unit converted
+        //#region one unit converted
         var newCurrencyOneUnitConvertedContainer = document.createElement("div");
         $(newCurrencyOneUnitConvertedContainer).addClass("currencyOneUnitConvertedContainer");
         var oneUnitConverted = document.createElement("p");

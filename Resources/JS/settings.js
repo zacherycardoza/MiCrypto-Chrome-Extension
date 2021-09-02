@@ -11,13 +11,18 @@ function saveSettings(settings) {
         }
         else {
             settingsInformation = {
-                supportedCryptoCurrencies: [{name: "Ethereum", symbol: "ETH", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0}, 
-                                            {name: "Bitcoin", symbol: "BTC", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
-                                            {name: "Stellar", symbol: "XLM", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
+                supportedCryptoCurrencies: [{name: "Ethereum", symbol: "ETH", active: "false", amountOwned: 0.151013, lastPrice: 0.00, newPrice: 0.0}, 
+                                            {name: "Bitcoin", symbol: "BTC", active: "false", amountOwned: 0.008342, lastPrice: 0.00, newPrice: 0.0},
+                                            {name: "Stellar", symbol: "XLM", active: "false", amountOwned: 54.434463, lastPrice: 0.00, newPrice: 0.0},
                                             {name: "Cardano", symbol: "ADA", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
+                                            {name: "BinanceCoin", symbol: "BNB", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
+                                            {name: "Tether", symbol: "USDT", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
                                             {name: "Dogecoin", symbol: "DOGE", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
+                                            {name: "Maker", symbol: "MKR", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
+                                            {name: "Sushi", symbol: "SUSHI", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
+                                            {name: "ChainLink", symbol: "LINK", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
                                             {name: "Ripple", symbol: "XRP", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0}],
-                supportedFiatCurrencies: ["CAD", "USD", "EUR", "GBP", "INR", "CNY"],
+                supportedFiatCurrencies: ["CAD", "USD", "EUR", "GBP", "INR", "CNY", "KRW", "HKD", "TWD", "AUD"],
                 activeFiatCurrency: "USD"
             };
             saveSettings(settingsInformation);
@@ -39,6 +44,30 @@ function saveSettings(settings) {
                 function () {
                     location.href="../Pages/popup.html"; }
                 );        
+    });
+})(jQuery);
+
+// Creating supported Fiat currencies containers
+(function ($) {
+    function CreateSupportedFiatCurrencyContainer(currency) {
+        //#region new container
+        var newCurrencyContainer = document.createElement("div");
+        $(newCurrencyContainer).addClass("supportedFiatCurrencyContainer");
+        $(newCurrencyContainer).attr("name", currency);
+        //#endregion
+        var currencyLabel = document.createElement("p");
+        $(currencyLabel).addClass("supportedFiatCurrency");
+        $(currencyLabel).html(currency);
+        newCurrencyContainer.appendChild(currencyLabel);
+        //#endregion
+
+        document.getElementById("supportedFiatCurrencyListContainer").appendChild(newCurrencyContainer);
+    }
+  
+    $(document).ready(function () {
+        settingsInformation.supportedFiatCurrencies.forEach(element => {
+            CreateSupportedFiatCurrencyContainer(element);
+        });     
     });
 })(jQuery);
 
@@ -70,6 +99,38 @@ function saveSettings(settings) {
                 $(this).addClass("active");
             }
         });
+    });
+})(jQuery);
+
+// Creating supported crypto currencies containers
+(function ($) {
+    function CreateSupportedCryptoCurrencyContainer(currency) {
+        //#region new container
+        var newCurrencyContainer = document.createElement("div");
+        $(newCurrencyContainer).addClass("supportedCurrencyContainer");
+        $(newCurrencyContainer).attr("name", currency.name);
+        //#endregion
+        //#region logo
+        var logo = document.createElement("img");
+        $(logo).addClass("currencyLogo");
+        var srcString = "../Resources/IMG/CryptoLogos/" + currency.name + "Logo.png";
+        $(logo).attr("src", srcString);
+        $(logo).attr("alt", currency.name + " Logo");
+        newCurrencyContainer.appendChild(logo);
+        //#endregion
+        var currencyLabel = document.createElement("h3");
+        $(currencyLabel).addClass("currencyLabel");
+        $(currencyLabel).html(currency.name);
+        newCurrencyContainer.appendChild(currencyLabel);
+        //#endregion
+
+        document.getElementById("supportedCryptocurrencyListContainer").appendChild(newCurrencyContainer);
+    }
+  
+    $(document).ready(function () {
+        settingsInformation.supportedCryptoCurrencies.forEach(element => {
+            CreateSupportedCryptoCurrencyContainer(element);
+        });     
     });
 })(jQuery);
 
