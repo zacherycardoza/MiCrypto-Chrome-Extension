@@ -3,32 +3,35 @@ var etherPrice = document.getElementById("etherPrice");
 var bitcoinPrice = document.getElementById("bitcoinPrice");
 var stellarPrice = document.getElementById("stellarPrice");
 var cardanoPrice = document.getElementById("cardanoPrice");
-var supportedCryptoCurrencies = [{name: "Ethereum", symbol: "ETH"}, {name: "Bitcoin", symbol: "BTC"}, {name: "Stellar", symbol: "XLM"}, {name: "Cardano", symbol: "ADA"}];
-//#endregion
 
-//#region API Calls
-function getAndSetEtherPrice() {
-    fetch("https://alpha-vantage.p.rapidapi.com/query?from_currency=ETH&function=CURRENCY_EXCHANGE_RATE&to_currency=CAD", {
-        "method": "GET",
-        "headers": {
-            "x-rapidapi-host": "alpha-vantage.p.rapidapi.com",
-            "x-rapidapi-key": "daa6fdf9ddmshcfb2f10f553a81bp1e0540jsn39f1bb665b13"
-            }
-    })
-    .then(res => res.json())
-    .then(data => {
-        etherPrice.innerHTML = "ETH: $" + (Math.round((data["Realtime Currency Exchange Rate"]["5. Exchange Rate"])*Math.pow(10,2))/Math.pow(10,2)).toFixed(2);
+// Get Settings Information 
+var settingsInformation;
+function saveSettings(settings) {
+    localStorage.setItem("settingsInformation", JSON.stringify(settings));
+}
+(function ($) {
+    $(document).ready(function () {
+        if ( localStorage.getItem("settingsInformation") != null) {
+            settingsInformation = JSON.parse(localStorage.getItem("settingsInformation"));
+            console.log(settingsInformation);
+        }
+        else {
+            settingsInformation = {
+                supportedCryptoCurrencies: [{name: "Ethereum", symbol: "ETH", active: "false", amountOwned: 0.151013, lastPrice: 0.00, newPrice: 0.0}, 
+                                            {name: "Bitcoin", symbol: "BTC", active: "false", amountOwned: 0.008342, lastPrice: 0.00, newPrice: 0.0},
+                                            {name: "Stellar", symbol: "XLM", active: "false", amountOwned: 54.434463, lastPrice: 0.00, newPrice: 0.0},
+                                            {name: "Cardano", symbol: "ADA", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
+                                            {name: "Dogecoin", symbol: "DOGE", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
+                                            {name: "Ripple", symbol: "XRP", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0}],
+                supportedFiatCurrencies: ["CAD", "USD", "EUR", "GBP", "INR", "CNY"],
+                activeFiatCurrency: "USD"
+            };
+            saveSettings(settingsInformation);
+        }
     });
-}
+})(jQuery);
 
 //#endregion
-
-function refreshPrices() {
-    getAndSetEtherPrice();
-    getAndSetBitcoinPrice();
-    getAndSetStellarPrice();
-    getAndSetCardanoPrice();
-}
 
 (function ($) {
     $(document).ready(function () {
@@ -47,7 +50,9 @@ function refreshPrices() {
 })(jQuery);
 
 (function ($) {
-    function CreateTrackedCurrencyContainer(currency, fiatCurrency) {
+    var alphaVantageAPIKey = "21NUI9FB9KOIO6TM";
+    
+    function CreateTrackedCurrencyContainer(currency) {
         //#region new container
         var newCurrencyContainer = document.createElement("div");
         $(newCurrencyContainer).addClass("currencyContainer");
@@ -82,30 +87,24 @@ function refreshPrices() {
         newCurrencyOneUnitLabelContainer.appendChild(oneUnitLabel);
         newCurrencyContainer.appendChild(newCurrencyOneUnitLabelContainer);
         //#endregion
-        //#region one unit converted
+        //#region (Not Done) one unit converted
         var newCurrencyOneUnitConvertedContainer = document.createElement("div");
         $(newCurrencyOneUnitConvertedContainer).addClass("currencyOneUnitConvertedContainer");
         var oneUnitConverted = document.createElement("p");
         $(oneUnitConverted).addClass("currencyOneUnitConverted");
-
-        var requestOptions = {
-            mode: 'cors'
-          }; 
-        var url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest";
-        var key = "0eacabc3-5ebd-4093-8324-6c4b72a86ee4";
-        var qString = "?CMC_PRO_API_KEY=" + key + "&start=1&limit=5&convert=USD";
-        fetch((url + qString), requestOptions)
-            .then(function(res) {
-                res.json();
-            })
-            .then(function(data) {
-                console.log(data);
-                //$(oneUnitConverted).html((Math.round((data["Realtime Currency Exchange Rate"]["5. Exchange Rate"])*Math.pow(10,2))/Math.pow(10,2)).toFixed(2) + " " + fiatCurrency);
-            })
-            .catch(error => {
-                console.log(error);
-                $(".currencyOneUnitConverted").html("0000.00 " + fiatCurrency);
-            });
+        fetch("https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=" + currency.symbol + "&to_currency=" + settingsInformation.activeFiatCurrency + "&apikey=" + alphaVantageAPIKey
+        )
+        .then(response => { response.json()
+        .then(data => {
+            currency.lastPrice = currency.newPrice;
+            currency.newPrice = (Math.round((data["Realtime Currency Exchange Rate"]["5. Exchange Rate"])*Math.pow(10,2))/Math.pow(10,2)).toFixed(2);
+            $(oneUnitConverted).html(currency.newPrice + " " + settingsInformation.activeFiatCurrency);
+            saveSettings(settingsInformation);
+        })
+        })
+        .catch(err => {
+            console.error(err);
+        });
         newCurrencyOneUnitConvertedContainer.appendChild(oneUnitConverted);
         newCurrencyContainer.appendChild(newCurrencyOneUnitConvertedContainer);
         //#endregion
@@ -114,7 +113,7 @@ function refreshPrices() {
         $(newCurrencySymbolContainer).addClass("currencySymbolContainer");
         var symbol = document.createElement("p");
         $(symbol).addClass("currencySymbol");
-        $(symbol).html("( " + currency.symbol + " )");
+        $(symbol).html(currency.symbol);
         newCurrencySymbolContainer.appendChild(symbol);
         newCurrencyContainer.appendChild(newCurrencySymbolContainer);
         //#endregion
@@ -123,7 +122,7 @@ function refreshPrices() {
         $(newCurrencyWalletLabelContainer).addClass("currencyWalletLabelContainer");
         var walletLabel = document.createElement("p");
         $(walletLabel).addClass("currencyWalletLabel");
-        $(walletLabel).html("0 " + currency.symbol);
+        $(walletLabel).html(currency.amountOwned + " " + currency.symbol);
         newCurrencyWalletLabelContainer.appendChild(walletLabel);
         newCurrencyContainer.appendChild(newCurrencyWalletLabelContainer);
         //#endregion
@@ -132,18 +131,19 @@ function refreshPrices() {
         $(newCurrencyWalletConvertedContainer).addClass("currencyWalletConvertedContainer");
         var walletConverted = document.createElement("p");
         $(walletConverted).addClass("currencyWalletConverted");
-        $(walletConverted).html("0000.00 " + fiatCurrency);
+        var amountOwnedConverted = currency.amountOwned * currency.newPrice;
+        amountOwnedConverted = (Math.round((amountOwnedConverted)*Math.pow(10,2))/Math.pow(10,2)).toFixed(2);
+        $(walletConverted).html(amountOwnedConverted + " " + settingsInformation.activeFiatCurrency);
         newCurrencyWalletConvertedContainer.appendChild(walletConverted);
         newCurrencyContainer.appendChild(newCurrencyWalletConvertedContainer);
         //#endregion
         document.getElementById("trackedCurrencyListContainer").appendChild(newCurrencyContainer);
     }
-
+  
     $(document).ready(function () {
-        supportedCryptoCurrencies.forEach(element => {
-            console.log(element.name + ": " + localStorage.getItem(element.name));
-            if ( localStorage.getItem(element.name) == "active" ) {
-                CreateTrackedCurrencyContainer(element, localStorage.getItem("fiatCurrency"));
+        settingsInformation.supportedCryptoCurrencies.forEach(element => {
+            if ( element.active == "true") {
+                CreateTrackedCurrencyContainer(element);
             }
         });     
     });

@@ -6,7 +6,6 @@
 }
 html{
     width: 350px;
-    height: 400px;
     margin: 0;
     padding: 0;
     background-color: var(--main);
@@ -54,8 +53,33 @@ body{
   padding-top: 5px;
   align-self: center;
   margin-left: 25%;
+  cursor: pointer;
 }
 
+/* Supported Fiat Currencies List */
+#supportedFiatCurrencyListContainer {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 5px;
+    width: 95%;
+    margin-left: 2.5%;
+}
+#supportedFiatCurrencyHeaderContainer {
+    grid-column: 1/ span 6;
+    grid-row: 1/ span 1;
+}
+.supportedFiatCurrencyContainer {
+    height: 15px;
+    background-color: var(--greyy);
+    border-radius: 5px;
+    border: 1px solid var(--panelColor);
+    color: var(--whitee);
+    width: 100%;
+}
+.supportedFiatCurrencyContainer:hover {
+    cursor: pointer;
+    background-color: rgb(0, 102, 32);
+}
 /* Supported Cryptocurrencies List */
 #supportedCryptocurrencyListContainer {
     display: grid;
@@ -99,14 +123,40 @@ body{
     background-color: var(--greyy);
     border: 1px solid var(--greyy);
 }
-h3, p{
+.supportedCurrencyContainer h3, p{
     margin: 0;
     padding: 0;
     text-align: center;
 }
 .supportedCurrencyContainer:hover {
+    cursor: pointer;
     background-color: rgb(0, 102, 32);
 }
 .active {
     background-color: rgb(0, 102, 32);
+}
+
+#themesContainer {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 5px;
+    width: 95%;
+    margin-left: 2.5%;
+}
+#themesHeaderContainer {
+    grid-column: 1/ span 6;
+    grid-row: 1/ span 1;
+}
+#themesListContainer {
+    grid-row: 2/ span 1;
+    grid-column: 1/ span 5;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 5px;
+}
+.theme {
+    background-color: blue;
+    height: 25px;
 }
