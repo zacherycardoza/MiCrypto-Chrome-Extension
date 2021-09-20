@@ -15,7 +15,6 @@ function saveSettings(settings) {
                                             {name: "Bitcoin", symbol: "BTC", active: "false", amountOwned: 0.008342, lastPrice: 0.00, newPrice: 0.0},
                                             {name: "Stellar", symbol: "XLM", active: "false", amountOwned: 54.434463, lastPrice: 0.00, newPrice: 0.0},
                                             {name: "Cardano", symbol: "ADA", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
-                                            {name: "BinanceCoin", symbol: "BNB", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
                                             {name: "Tether", symbol: "USDT", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
                                             {name: "Dogecoin", symbol: "DOGE", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
                                             {name: "Maker", symbol: "MKR", active: "false", amountOwned: 0.00, lastPrice: 0.00, newPrice: 0.0},
