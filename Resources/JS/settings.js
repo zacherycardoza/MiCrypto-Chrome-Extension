@@ -9,91 +9,10 @@ function saveSettings(settings) {
       settingsInformation = JSON.parse(
         localStorage.getItem("settingsInformation")
       );
-      console.log(settingsInformation);
     } else {
       settingsInformation = {
-        supportedCryptoCurrencies: [
-          {
-            name: "Ethereum",
-            symbol: "ETH",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-          {
-            name: "Bitcoin",
-            symbol: "BTC",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-          {
-            name: "Stellar",
-            symbol: "XLM",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-          {
-            name: "Cardano",
-            symbol: "ADA",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-          {
-            name: "Tether",
-            symbol: "USDT",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-          {
-            name: "Dogecoin",
-            symbol: "DOGE",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-          {
-            name: "Maker",
-            symbol: "MKR",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-          {
-            name: "Sushi",
-            symbol: "SUSHI",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-          {
-            name: "ChainLink",
-            symbol: "LINK",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-          {
-            name: "Ripple",
-            symbol: "XRP",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-        ],
+        walletTotal: 0,
+        supportedCryptoCurrencies: [],
         supportedFiatCurrencies: [
           "CAD",
           "USD",
@@ -212,7 +131,9 @@ function saveSettings(settings) {
     var logo = document.createElement("img");
     $(logo).addClass("currencyLogo");
     var srcString =
-      "../Resources/IMG/CryptoLogos/" + currency.name + "Logo.png";
+      currency.imageString == null
+        ? "../Resources/IMG/CryptoLogos/" + currency.name + "Logo.png"
+        : currency.imageString;
     $(logo).attr("src", srcString);
     $(logo).attr("alt", currency.name + " Logo");
     newCurrencyContainer.appendChild(logo);
@@ -223,48 +144,105 @@ function saveSettings(settings) {
     newCurrencyContainer.appendChild(currencyLabel);
     //#endregion
 
+    if (currency.active == "true") {
+      $(newCurrencyContainer).addClass("active");
+    }
     document
       .getElementById("supportedCryptocurrencyListContainer")
       .appendChild(newCurrencyContainer);
+  }
+  function CreateAddNewCryptoCurrencyContainer() {
+    //#region new container
+    var addCurrencyContainer = document.createElement("div");
+    $(addCurrencyContainer).addClass("supportedCurrencyContainer");
+    $(addCurrencyContainer).attr("id", "addNewCurrency");
+    //#endregion
+    //#region logo
+    var logo = document.createElement("img");
+    $(logo).addClass("currencyLogo");
+    $(logo).attr("src", "../Resources/IMG/CryptoLogos/AddNewCurrencyLogo.png");
+    $(logo).attr("alt", "Add New Currency Logo");
+    addCurrencyContainer.appendChild(logo);
+    //#endregion
+    var currencyLabel = document.createElement("h3");
+    $(currencyLabel).addClass("currencyLabel");
+    $(currencyLabel).html("Add Coins");
+    addCurrencyContainer.appendChild(currencyLabel);
+    //#endregion
+
+    document
+      .getElementById("supportedCryptocurrencyListContainer")
+      .appendChild(addCurrencyContainer);
   }
 
   $(document).ready(function () {
     settingsInformation.supportedCryptoCurrencies.forEach((element) => {
       CreateSupportedCryptoCurrencyContainer(element);
     });
-  });
-})(jQuery);
+    CreateAddNewCryptoCurrencyContainer();
 
-// Setting active crypto currencies
-(function ($) {
-  $(document).ready(function () {
-    if (settingsInformation.supportedCryptoCurrencies != null) {
-    }
-    settingsInformation.supportedCryptoCurrencies.forEach((element) => {
-      if (element.active == "true") {
-        var _ = document.getElementsByName(element.name)[0];
-        $(_).addClass("active");
-      }
-    });
-  });
-})(jQuery);
-
-// Toggling cryptocurrencies function
-(function ($) {
-  $(document).ready(function () {
-    $(".supportedCurrencyContainer").click(function () {
+    // Add cryptocurrencies function : October 6th, 2021 Zachary Cardoza
+    $("#addNewCurrency").on("click", function () {
       if ($(this).hasClass("active")) {
         $(this).removeClass("active");
-        settingsInformation.supportedCryptoCurrencies.find(
-          (element) => element.name == $(this).attr("name")
-        ).active = "false";
+        $("#addCryptocurrencyContainer").css("display", "none");
       } else {
         $(this).addClass("active");
-        settingsInformation.supportedCryptoCurrencies.find(
-          (element) => element.name == $(this).attr("name")
-        ).active = "true";
+        $("#addCryptocurrencyContainer").css("display", "grid");
       }
-      saveSettings(settingsInformation);
+    });
+    $("#addCryptocurrencyButton").on("click", async function () {
+      fetch(
+        "https://api.coingecko.com/api/v3/coins/" +
+          `${document
+            .getElementById("addCryptocurrencyInput")
+            .value.toLowerCase()}`
+      )
+        .then((res) => {
+          if (res.status == 200) {
+            res.json().then((data) => {
+              console.log(data);
+              var newCurrencyToAdd = {
+                name: data["name"],
+                symbol: data["symbol"].toUpperCase(),
+                active: "true",
+                amountOwned: 0.0,
+                lastPrice: 0.0,
+                newPrice: 0.0,
+                imageString: data["image"]["small"],
+              };
+              settingsInformation.supportedCryptoCurrencies.push(
+                newCurrencyToAdd
+              );
+              saveSettings(settingsInformation);
+              CreateSupportedCryptoCurrencyContainer(newCurrencyToAdd);
+              document.getElementById("addCryptocurrencyInput").value = "";
+            });
+          } else if (res.status == 404) {
+            document.getElementById("addCryptocurrencyInput").placeholder =
+              "Could Not Find Coin. Try Again.";
+            document.getElementById("addCryptocurrencyInput").value = "";
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+    $(".supportedCurrencyContainer").on("click", function () {
+      if ($(this).attr("id") == null) {
+        if ($(this).hasClass("active")) {
+          $(this).removeClass("active");
+          settingsInformation.supportedCryptoCurrencies.find(
+            (element) => element.name == $(this).attr("name")
+          ).active = "false";
+        } else {
+          $(this).addClass("active");
+          settingsInformation.supportedCryptoCurrencies.find(
+            (element) => element.name == $(this).attr("name")
+          ).active = "true";
+        }
+        saveSettings(settingsInformation);
+      }
     });
   });
 })(jQuery);

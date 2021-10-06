@@ -12,7 +12,7 @@ html {
 }
 body {
   font-family: "Inconsolata", monospace;
-  font-size: medium;
+  font-size: small;
   margin: 0;
   padding: 0;
   width: 100%;
@@ -64,11 +64,26 @@ p {
   padding: 0;
   margin-top: 5px;
   margin-bottom: 5px;
+  display: grid;
+  grid-template-rows: 1fr, 1fr;
+  grid-template-columns: 1fr 1fr 1.5fr 1.5fr;
+  gap: 5px;
+  width: 95%;
+  margin-left: 2.5%;
 }
 #miCoinsHeaderContainer h3 {
   margin: 0;
   padding: 0;
   margin-left: 2.5%;
+  line-height: 25px;
+  vertical-align: middle;
+}
+#walletTotal {
+  text-align: right;
+  line-height: 25px;
+  vertical-align: middle;
+  padding-right: 5px;
+  grid-column: 2 / span 3;
 }
 
 #trackedCurrencyListContainer {

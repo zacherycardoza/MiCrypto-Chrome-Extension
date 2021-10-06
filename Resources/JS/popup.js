@@ -4,111 +4,13 @@ function saveSettings(settings) {
   localStorage.setItem("settingsInformation", JSON.stringify(settings));
 }
 (function ($) {
-  $(document).ready(function () {
+  $(document).ready(async function () {
     if (localStorage.getItem("settingsInformation") != null) {
       settingsInformation = JSON.parse(
         localStorage.getItem("settingsInformation")
       );
-      console.log(settingsInformation);
     } else {
-      settingsInformation = {
-        supportedCryptoCurrencies: [
-          {
-            name: "Ethereum",
-            symbol: "ETH",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-          {
-            name: "Bitcoin",
-            symbol: "BTC",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-          {
-            name: "Stellar",
-            symbol: "XLM",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-          {
-            name: "Cardano",
-            symbol: "ADA",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-          {
-            name: "Tether",
-            symbol: "USDT",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-          {
-            name: "Dogecoin",
-            symbol: "DOGE",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-          {
-            name: "Maker",
-            symbol: "MKR",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-          {
-            name: "Sushi",
-            symbol: "SUSHI",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-          {
-            name: "ChainLink",
-            symbol: "LINK",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-          {
-            name: "Ripple",
-            symbol: "XRP",
-            active: "false",
-            amountOwned: 0.0,
-            lastPrice: 0.0,
-            newPrice: 0.0,
-          },
-        ],
-        supportedFiatCurrencies: [
-          "CAD",
-          "USD",
-          "EUR",
-          "GBP",
-          "INR",
-          "CNY",
-          "KRW",
-          "HKD",
-          "TWD",
-          "AUD",
-        ],
-        activeFiatCurrency: "USD",
-      };
-      saveSettings(settingsInformation);
+      location.href = "../Pages/settings.html";
     }
   });
 })(jQuery);
@@ -135,8 +37,6 @@ function saveSettings(settings) {
 //#endregion
 
 (function ($) {
-  var alphaVantageAPIKey = "21NUI9FB9KOIO6TM";
-
   function CreateTrackedCurrencyContainer(currency) {
     //#region new container
     var newCurrencyContainer = document.createElement("div");
@@ -149,7 +49,9 @@ function saveSettings(settings) {
     var logo = document.createElement("img");
     $(logo).addClass("currencyLogo");
     var srcString =
-      "../Resources/IMG/CryptoLogos/" + currency.name + "Logo.png";
+      currency.imageString == null
+        ? "../Resources/IMG/CryptoLogos/" + currency.name + "Logo.png"
+        : currency.imageString;
     $(logo).attr("src", srcString);
     $(logo).attr("alt", currency.name);
     newCurrencyLogoContainer.appendChild(logo);
@@ -186,32 +88,34 @@ function saveSettings(settings) {
     );
     var oneUnitConverted = document.createElement("p");
     $(oneUnitConverted).addClass("currencyOneUnitConverted");
+
     fetch(
-      "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=" +
-        currency.symbol +
-        "&to_currency=" +
-        settingsInformation.activeFiatCurrency +
-        "&apikey=" +
-        alphaVantageAPIKey
+      `https://api.coingecko.com/api/v3/simple/price?ids=${currency.name.toLowerCase()}&vs_currencies=${settingsInformation.activeFiatCurrency.toLowerCase()}`
     )
-      .then((response) => {
-        response.json().then((data) => {
-          currency.lastPrice = currency.newPrice;
-          currency.newPrice = (
-            Math.round(
-              data["Realtime Currency Exchange Rate"]["5. Exchange Rate"] *
-                Math.pow(10, 2)
-            ) / Math.pow(10, 2)
-          ).toFixed(2);
-          $(oneUnitConverted).html(
-            currency.newPrice + " " + settingsInformation.activeFiatCurrency
-          );
-          saveSettings(settingsInformation);
-        });
+      .then((res) => {
+        if (res.status == 200) {
+          res.json().then((data) => {
+            currency.lastPrice = currency.newPrice;
+            currency.newPrice = (
+              Math.round(
+                data[`${currency.name.toLowerCase()}`][
+                  `${settingsInformation.activeFiatCurrency.toLowerCase()}`
+                ] * Math.pow(10, 2)
+              ) / Math.pow(10, 2)
+            ).toFixed(2);
+            $(oneUnitConverted).html(
+              currency.newPrice + " " + settingsInformation.activeFiatCurrency
+            );
+            saveSettings(settingsInformation);
+          });
+        } else if (res.status == 404) {
+          alert("not available");
+        }
       })
       .catch((err) => {
-        console.error(err);
+        console.log(err);
       });
+
     newCurrencyOneUnitConvertedContainer.appendChild(oneUnitConverted);
     newCurrencyContainer.appendChild(newCurrencyOneUnitConvertedContainer);
     //#endregion
@@ -257,6 +161,10 @@ function saveSettings(settings) {
     );
     newCurrencyWalletConvertedContainer.appendChild(walletConverted);
     newCurrencyContainer.appendChild(newCurrencyWalletConvertedContainer);
+    document.getElementById("walletTotal").innerHTML =
+      settingsInformation.walletTotal +
+      " " +
+      settingsInformation.activeFiatCurrency;
     //#endregion
     document
       .getElementById("trackedCurrencyListContainer")
@@ -270,24 +178,43 @@ function saveSettings(settings) {
       }
     });
 
-    $(".currencyWalletLabel").on("input", async function () {
-      var currency = settingsInformation.supportedCryptoCurrencies.filter(
-        (currency) => currency.name == $(this).attr("Id")
-      );
-      if ($(this).html().length <= 0) {
-        $(this).html("0000.00");
-      }
-      currency[0].amountOwned = $(this).html();
-      saveSettings(settingsInformation);
+    $(".currencyWalletLabel")
+      .on("input", async function () {
+        var currency = settingsInformation.supportedCryptoCurrencies.filter(
+          (currency) => currency.name == $(this).attr("Id")
+        );
+        if ($(this).html().length <= 0) {
+          $(this).html("0");
+        }
+        currency[0].amountOwned = $(this).html();
+        saveSettings(settingsInformation);
 
-      var amountOwnedConverted = $(this).html() * currency[0].newPrice;
-      var convertIdString = $(this).attr("Id") + "WalletConverted";
-      amountOwnedConverted = (
-        Math.round(amountOwnedConverted * Math.pow(10, 2)) / Math.pow(10, 2)
-      ).toFixed(2);
-      $(`#${convertIdString}`).html(
-        amountOwnedConverted + " " + settingsInformation.activeFiatCurrency
-      );
-    });
+        var amountOwnedConverted = $(this).html() * currency[0].newPrice;
+        var convertIdString = $(this).attr("Id") + "WalletConverted";
+        amountOwnedConverted = (
+          Math.round(amountOwnedConverted * Math.pow(10, 2)) / Math.pow(10, 2)
+        ).toFixed(2);
+        $(`#${convertIdString}`).html(
+          amountOwnedConverted + " " + settingsInformation.activeFiatCurrency
+        );
+      })
+      .on("input", async function () {
+        var walletTotalAmount = 0;
+        var activeCurrencies =
+          settingsInformation.supportedCryptoCurrencies.filter(
+            (currency) => currency.active == "true"
+          );
+        console.log(activeCurrencies);
+        activeCurrencies.forEach((currency) => {
+          walletTotalAmount += currency.amountOwned * currency.newPrice;
+        });
+        walletTotalAmount = (
+          Math.round(walletTotalAmount * Math.pow(10, 2)) / Math.pow(10, 2)
+        ).toFixed(2);
+        document.getElementById("walletTotal").innerHTML =
+          walletTotalAmount + " " + settingsInformation.activeFiatCurrency;
+        settingsInformation.walletTotal = walletTotalAmount;
+        saveSettings(settingsInformation);
+      });
   });
 })(jQuery);
