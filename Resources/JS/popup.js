@@ -88,17 +88,19 @@ function saveSettings(settings) {
     );
     var oneUnitConverted = document.createElement("p");
     $(oneUnitConverted).addClass("currencyOneUnitConverted");
-
     fetch(
-      `https://api.coingecko.com/api/v3/simple/price?ids=${currency.name.toLowerCase()}&vs_currencies=${settingsInformation.activeFiatCurrency.toLowerCase()}`
+      `https://api.coingecko.com/api/v3/simple/price?ids=${
+        currency.apiId
+      }&vs_currencies=${settingsInformation.activeFiatCurrency.toLowerCase()}`
     )
       .then((res) => {
         if (res.status == 200) {
           res.json().then((data) => {
             currency.lastPrice = currency.newPrice;
+            console.log(data);
             currency.newPrice = (
               Math.round(
-                data[`${currency.name.toLowerCase()}`][
+                data[`${currency.apiId}`][
                   `${settingsInformation.activeFiatCurrency.toLowerCase()}`
                 ] * Math.pow(10, 2)
               ) / Math.pow(10, 2)

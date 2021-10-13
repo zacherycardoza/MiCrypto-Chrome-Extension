@@ -3,7 +3,7 @@
   "description": "Crypto Tracker",
   "version": "1.0",
   "manifest_version": 3,
-  "permissions": ["storage", "activeTab", "scripting", "webRequest"],
+  "permissions": ["storage", "webRequest"],
   "action": {
     "default_popup": "Pages/popup.html",
     "default_icon": {

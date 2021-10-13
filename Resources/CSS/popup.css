@@ -140,4 +140,6 @@ p {
   background-color: var(--main);
   border: 1px, solid, var(--whitee);
   outline: 1px, solid, var(--whitee);
+  border-radius: 5px;
+  padding-right: 2px;
 }

@@ -208,8 +208,12 @@ function saveSettings(settings) {
                 active: "true",
                 amountOwned: 0.0,
                 lastPrice: 0.0,
-                newPrice: 0.0,
+                newPrice:
+                  data["market_data"]["current_price"][
+                    `${settingsInformation.activeFiatCurrency.toLowerCase()}`
+                  ],
                 imageString: data["image"]["small"],
+                apiId: data["id"],
               };
               settingsInformation.supportedCryptoCurrencies.push(
                 newCurrencyToAdd
