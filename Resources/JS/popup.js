@@ -43,19 +43,23 @@ function saveSettings(settings) {
     $(newCurrencyContainer).addClass("currencyContainer");
     $(newCurrencyContainer).attr("name", currency.name);
     //#endregion
+    var rowOne = document.createElement("div");
+    var rowTwo = document.createElement("div");
+    $(rowOne).addClass("rowOne");
+    $(rowTwo).addClass("rowTwo");
     //#region logo
     var newCurrencyLogoContainer = document.createElement("div");
     $(newCurrencyLogoContainer).addClass("currencyLogoContainer");
     var logo = document.createElement("img");
     $(logo).addClass("currencyLogo");
     var srcString =
-      currency.imageString == null
+      currency.imageStringThumb == null
         ? "../Resources/IMG/CryptoLogos/" + currency.name + "Logo.png"
-        : currency.imageString;
+        : currency.imageStringThumb;
     $(logo).attr("src", srcString);
     $(logo).attr("alt", currency.name);
     newCurrencyLogoContainer.appendChild(logo);
-    newCurrencyContainer.appendChild(newCurrencyLogoContainer);
+    rowOne.appendChild(newCurrencyLogoContainer);
     //#endregion
     //#region name
     var newCurrencyNameContainer = document.createElement("div");
@@ -64,22 +68,7 @@ function saveSettings(settings) {
     $(name).addClass("currencyName");
     $(name).html(currency.name);
     newCurrencyNameContainer.appendChild(name);
-    newCurrencyContainer.appendChild(newCurrencyNameContainer);
-    //#endregion
-    //#region one unit label
-    var newCurrencyOneUnitLabelContainer = document.createElement("div");
-    $(newCurrencyOneUnitLabelContainer).addClass(
-      "currencyOneUnitLabelContainer"
-    );
-
-    var oneUnitLabel = document.createElement("p");
-    $(oneUnitLabel).addClass("currencyOneUnit");
-    $(oneUnitLabel).html("1 ");
-    newCurrencyOneUnitLabelContainer.appendChild(oneUnitLabel);
-    var oneUnitSymbolLabel = document.createElement("p");
-    $(oneUnitSymbolLabel).html(currency.symbol);
-    newCurrencyOneUnitLabelContainer.appendChild(oneUnitSymbolLabel);
-    newCurrencyContainer.appendChild(newCurrencyOneUnitLabelContainer);
+    rowOne.appendChild(newCurrencyNameContainer);
     //#endregion
     //#region one unit converted
     var newCurrencyOneUnitConvertedContainer = document.createElement("div");
@@ -106,7 +95,11 @@ function saveSettings(settings) {
               ) / Math.pow(10, 2)
             ).toFixed(2);
             $(oneUnitConverted).html(
-              currency.newPrice + " " + settingsInformation.activeFiatCurrency
+              currency.symbol +
+                "  " +
+                currency.newPrice +
+                " " +
+                settingsInformation.activeFiatCurrency
             );
             saveSettings(settingsInformation);
           });
@@ -119,32 +112,22 @@ function saveSettings(settings) {
       });
 
     newCurrencyOneUnitConvertedContainer.appendChild(oneUnitConverted);
-    newCurrencyContainer.appendChild(newCurrencyOneUnitConvertedContainer);
-    //#endregion
-    //#region symbol
-    var newCurrencySymbolContainer = document.createElement("div");
-    $(newCurrencySymbolContainer).addClass("currencySymbolContainer");
-    var symbol = document.createElement("p");
-    $(symbol).addClass("currencySymbol");
-    $(symbol).html(currency.symbol);
-    newCurrencySymbolContainer.appendChild(symbol);
-    newCurrencyContainer.appendChild(newCurrencySymbolContainer);
+    rowTwo.appendChild(newCurrencyOneUnitConvertedContainer);
     //#endregion
     //#region wallet label
     var newCurrencyWalletLabelContainer = document.createElement("div");
     $(newCurrencyWalletLabelContainer).addClass("currencyWalletLabelContainer");
-
     var walletLabel = document.createElement("p");
     $(walletLabel).addClass("currencyWalletLabel");
     $(walletLabel).addClass("walletAmount");
     $(walletLabel).attr("Id", currency.name);
     $(walletLabel).attr("contenteditable", "true");
-    $(walletLabel).html(currency.amountOwned + " ");
+    $(walletLabel).html(currency.amountOwned);
     newCurrencyWalletLabelContainer.appendChild(walletLabel);
     var walletSymbolLabel = document.createElement("p");
-    $(walletSymbolLabel).html(currency.symbol);
+    $(walletSymbolLabel).html(" " + currency.symbol);
     newCurrencyWalletLabelContainer.appendChild(walletSymbolLabel);
-    newCurrencyContainer.appendChild(newCurrencyWalletLabelContainer);
+    rowOne.appendChild(newCurrencyWalletLabelContainer);
     //#endregion
     //#region wallet converted
     var newCurrencyWalletConvertedContainer = document.createElement("div");
@@ -162,12 +145,14 @@ function saveSettings(settings) {
       amountOwnedConverted + " " + settingsInformation.activeFiatCurrency
     );
     newCurrencyWalletConvertedContainer.appendChild(walletConverted);
-    newCurrencyContainer.appendChild(newCurrencyWalletConvertedContainer);
+    rowTwo.appendChild(newCurrencyWalletConvertedContainer);
     document.getElementById("walletTotal").innerHTML =
       settingsInformation.walletTotal +
       " " +
       settingsInformation.activeFiatCurrency;
     //#endregion
+    newCurrencyContainer.appendChild(rowOne);
+    newCurrencyContainer.appendChild(rowTwo);
     document
       .getElementById("trackedCurrencyListContainer")
       .appendChild(newCurrencyContainer);

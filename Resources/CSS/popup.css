@@ -1,23 +1,22 @@
 :root {
-  --main: #16151d;
+  --main: #2e2738;
   --panelColor: rgb(97, 79, 141);
-  --greyy: rgb(88, 85, 104);
+  --greyy: rgb(0, 82, 102);
   --whitee: rgb(218, 216, 236);
 }
 html {
-  width: 400px;
+  width: 375px;
   margin: 0;
   padding: 0;
   background-color: var(--main);
+  color: var(--whitee);
 }
 body {
   font-family: "Inconsolata", monospace;
-  font-size: small;
+  font-size: medium;
   margin: 0;
   padding: 0;
   width: 100%;
-  background-color: var(--main);
-  color: var(--whitee);
   padding-bottom: 5px;
 }
 p {
@@ -25,11 +24,11 @@ p {
   padding: 0;
 }
 #headerBox {
-  background-color: var(--main);
-  margin-left: 2.5%;
   display: grid;
-  grid-template-rows: 1fr, 1fr;
+  grid-template-rows: repeat(2, 1fr);
   grid-template-columns: 1fr 5fr 1fr;
+  width: 95%;
+  margin-left: 2.5%;
 }
 #headerImageContainer {
   grid-column: 1 / span 1;
@@ -55,15 +54,12 @@ p {
   padding: 0;
   padding-top: 5px;
   align-self: center;
-  margin-left: 25%;
+  margin-left: 30%;
   cursor: pointer;
 }
 
 #miCoinsHeaderContainer {
-  margin: 0;
   padding: 0;
-  margin-top: 5px;
-  margin-bottom: 5px;
   display: grid;
   grid-template-rows: 1fr, 1fr;
   grid-template-columns: 1fr 1fr 1.5fr 1.5fr;
@@ -74,13 +70,12 @@ p {
 #miCoinsHeaderContainer h3 {
   margin: 0;
   padding: 0;
-  margin-left: 2.5%;
-  line-height: 25px;
+  line-height: 30px;
   vertical-align: middle;
 }
 #walletTotal {
   text-align: right;
-  line-height: 25px;
+  line-height: 30px;
   vertical-align: middle;
   padding-right: 5px;
   grid-column: 2 / span 3;
@@ -89,57 +84,78 @@ p {
 #trackedCurrencyListContainer {
   display: grid;
   gap: 5px;
+  cursor: default;
   width: 95%;
   margin-left: 2.5%;
-  cursor: default;
 }
 #trackedCurrencyListContainer .currencyContainer {
   display: grid;
   height: 60px;
   margin: 0;
   padding: 0;
-  grid-template-rows: 1fr, 1fr;
-  grid-template-columns: 1fr 1fr 1.5fr 1.5fr;
+  grid-template-rows: repeat(2, 30px);
+  grid-template-columns: 1fr;
   background-color: var(--greyy);
   border-radius: 5px;
 }
+.rowOne {
+  display: grid;
+  grid-template-columns: 30px auto 130px;
+  grid-template-rows: 1fr;
+  margin: 2px;
+}
+.rowTwo {
+  display: grid;
+  grid-template-columns: auto 130px;
+  grid-template-rows: 1fr;
+  margin: 2px;
+  padding-left: 2px;
+}
 .currencyLogoContainer {
-  display: flex;
-  grid-column: 1 / span 1;
-  grid-row: 1 / span 2;
+  width: 30px;
+  padding-left: 2.5px;
+  padding-top: 2.5px;
 }
-.currencyLogoContainer img {
-  width: 75%;
-  height: 75%;
-  align-self: center;
-  margin-left: 12.5%;
+.currencyNameContainer {
+  padding-left: 2px;
+  font-size: large;
+  font-weight: bold;
+  grid-column: 2 / span 1;
+  grid-row: 1 / span 1;
+  line-height: 30px;
+  vertical-align: middle;
 }
-.currencyNameContainer p {
-  font-size: medium;
+.currencyWalletLabelContainer {
+}
+.currencyOneUnitLabelContainer {
+}
+.currencyOneUnitConvertedContainer {
+  line-height: 30px;
+  vertical-align: middle;
+}
+.currencyWalletConvertedContainer {
 }
 .currencyWalletConvertedContainer,
-.currencyOneUnitConvertedContainer,
 .currencyOneUnitLabelContainer,
 .currencyWalletLabelContainer {
   text-align: right;
-  line-height: 25px;
+  line-height: 30px;
   vertical-align: middle;
   padding-right: 5px;
 }
-.currencyWalletLabelContainer,
-.currencyOneUnitLabelContainer {
+.currencyWalletLabelContainer {
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 8fr 1fr;
   grid-template-rows: 1fr;
-  padding: 2px;
 }
-
+.currencyWalletLabel {
+  padding-right: 5px;
+}
 .walletAmount:hover,
 .walletAmount:focus {
   cursor: pointer;
   background-color: var(--main);
-  border: 1px, solid, var(--whitee);
-  outline: 1px, solid, var(--whitee);
   border-radius: 5px;
-  padding-right: 2px;
+  padding-right: 7.5px;
+  outline: none;
 }

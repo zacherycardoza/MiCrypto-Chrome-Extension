@@ -1,7 +1,5 @@
 <html lang="en">
     <head>
-        <script src="../jquery-3.6.0.min.js"></script>
-        <script src="../Resources/JS/settings.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200&display=swap" rel="stylesheet">
@@ -17,7 +15,7 @@
                 <h1 id="header">MiSettings</h1>
                 </div>    
             <div id="headerSettingsIconContainer">
-                <button id="settingsButton"><img id="settingsIcon" src="../Resources/IMG//settings.png" alt="Setting Icon" height="24px" width="24px"></button>
+                <button id="settingsButton"><img id="settingsIcon" src="../Resources/IMG/main.png" alt="Setting Icon" height="24px" width="24px"></button>
                 </div>
             </div>
         
@@ -27,20 +25,26 @@
                 <h3 id="supportedFiatCurrencyHeader">Fiat Currencies</h3>
                 </div>        
             </div>
-        
+    
         <!-- Supported Cryptocurrency List Container -->
         <div id="supportedCryptocurrencyListContainer">
             <div id="supportedCryptocurrencyHeaderContainer">
                 <h3 id="supportedCryptocurrencyHeader">Crypto Currencies</h3>
                 </div>
+            <!-- Add Cryptocurrency Container -->
+            <div id="addNewCurrency" class="supportedCurrencyContainer">
+                <img src="../Resources/IMG/CryptoLogos/AddNewCurrencyLogo.png" alt="Add Coins" class="currencyLogo">
+                <h3 class="currencyLabel">Add Coins</h3>
+                <input id="addCryptocurrencyInput" type="text" placeholder="Enter Currency Name Here" class="currencySymbol">
+                <span id="suggestion-container" class="suggestion-container currencySymbol"></span>
+                <button id="addCryptocurrencyButton" type="button">Add</button>
+            </div>
             
             </div>
+            <br><p class="developer">Developed By Zachary Cardoza</p>
 
-        <!-- Add Cryptocurrency Container -->
-        <div id="addCryptocurrencyContainer">
-            <input id="addCryptocurrencyInput" type="text" placeholder="Add New Crypto Currency">
-            <button id="addCryptocurrencyButton" type="button">Add</button>
-            </div>
-        <br><p>Developed By Zachary Cardoza</p>
+        <script src="../jquery-3.6.0.min.js"></script>
+        <script src="../Resources/JS/settings.js"></script>
+        <script src="../Resources/JS/predictive_search.js"></script>
         </body>
 </html>

@@ -38,10 +38,10 @@ function saveSettings(settings) {
     $("#settingsButton")
       .hover(
         function () {
-          $("#settingsIcon").attr("src", "../Resources/IMG/settingsHover.png");
+          $("#settingsIcon").attr("src", "../Resources/IMG/mainHover.png");
         },
         function () {
-          $("#settingsIcon").attr("src", "../Resources/IMG/settings.png");
+          $("#settingsIcon").attr("src", "../Resources/IMG/main.png");
         }
       )
       .click(function () {
@@ -131,17 +131,51 @@ function saveSettings(settings) {
     var logo = document.createElement("img");
     $(logo).addClass("currencyLogo");
     var srcString =
-      currency.imageString == null
+      currency.imageStringSmall == null
         ? "../Resources/IMG/CryptoLogos/" + currency.name + "Logo.png"
-        : currency.imageString;
+        : currency.imageStringSmall;
     $(logo).attr("src", srcString);
     $(logo).attr("alt", currency.name + " Logo");
     newCurrencyContainer.appendChild(logo);
     //#endregion
-    var currencyLabel = document.createElement("h3");
+    //#region label
+    var currencyLabel = document.createElement("p");
     $(currencyLabel).addClass("currencyLabel");
     $(currencyLabel).html(currency.name);
     newCurrencyContainer.appendChild(currencyLabel);
+    //#endregion
+    //#region symbol
+    var currencySymbol = document.createElement("p");
+    $(currencySymbol).addClass("currencySymbol");
+    $(currencySymbol).html(currency.symbol);
+    newCurrencyContainer.appendChild(currencySymbol);
+    //#endregion
+    //#region toggle
+    var toggleContainer = document.createElement("label");
+    $(toggleContainer).addClass("switch");
+    var checkBox = document.createElement("input");
+    $(checkBox).addClass("toggler");
+    $(checkBox).attr("type", "checkbox");
+    $(checkBox).attr("name", currency.name);
+    if (currency.active == "true") {
+      checkBox.checked = true;
+    } else {
+      checkBox.checked = false;
+    }
+    toggleContainer.appendChild(checkBox);
+    var sliderSpan = document.createElement("span");
+    $(sliderSpan).addClass("slider");
+    $(sliderSpan).addClass("round");
+    $(sliderSpan).addClass("currencyTrackToggle");
+    toggleContainer.appendChild(sliderSpan);
+    newCurrencyContainer.appendChild(toggleContainer);
+    //#endregion
+    //#region delete button
+    var currencyDeleteButton = document.createElement("button");
+    $(currencyDeleteButton).addClass("currencyDeleteButton");
+    $(currencyDeleteButton).attr("name", currency.name);
+    $(currencyDeleteButton).html("Delete");
+    newCurrencyContainer.appendChild(currencyDeleteButton);
     //#endregion
 
     if (currency.active == "true") {
@@ -151,47 +185,28 @@ function saveSettings(settings) {
       .getElementById("supportedCryptocurrencyListContainer")
       .appendChild(newCurrencyContainer);
   }
-  function CreateAddNewCryptoCurrencyContainer() {
-    //#region new container
-    var addCurrencyContainer = document.createElement("div");
-    $(addCurrencyContainer).addClass("supportedCurrencyContainer");
-    $(addCurrencyContainer).attr("id", "addNewCurrency");
-    //#endregion
-    //#region logo
-    var logo = document.createElement("img");
-    $(logo).addClass("currencyLogo");
-    $(logo).attr("src", "../Resources/IMG/CryptoLogos/AddNewCurrencyLogo.png");
-    $(logo).attr("alt", "Add New Currency Logo");
-    addCurrencyContainer.appendChild(logo);
-    //#endregion
-    var currencyLabel = document.createElement("h3");
-    $(currencyLabel).addClass("currencyLabel");
-    $(currencyLabel).html("Add Coins");
-    addCurrencyContainer.appendChild(currencyLabel);
-    //#endregion
-
-    document
-      .getElementById("supportedCryptocurrencyListContainer")
-      .appendChild(addCurrencyContainer);
-  }
 
   $(document).ready(function () {
     settingsInformation.supportedCryptoCurrencies.forEach((element) => {
       CreateSupportedCryptoCurrencyContainer(element);
     });
-    CreateAddNewCryptoCurrencyContainer();
 
     // Add cryptocurrencies function : October 6th, 2021 Zachary Cardoza
-    $("#addNewCurrency").on("click", function () {
-      if ($(this).hasClass("active")) {
-        $(this).removeClass("active");
-        $("#addCryptocurrencyContainer").css("display", "none");
-      } else {
-        $(this).addClass("active");
-        $("#addCryptocurrencyContainer").css("display", "grid");
-      }
-    });
     $("#addCryptocurrencyButton").on("click", async function () {
+      // check if coin is already being tracked and returns out if so
+      var existingCurrency = settingsInformation.supportedCryptoCurrencies.find(
+        (element) =>
+          element.apiId ==
+          document.getElementById("addCryptocurrencyInput").value.toLowerCase()
+      );
+      if (existingCurrency != null) {
+        document.getElementById("addCryptocurrencyInput").placeholder =
+          "Coin Is Already Being Tracked.";
+        document.getElementById("addCryptocurrencyInput").value = "";
+        document.getElementById("suggestion-container").innerHTML = "";
+        return;
+      }
+
       fetch(
         "https://api.coingecko.com/api/v3/coins/" +
           `${document
@@ -212,7 +227,8 @@ function saveSettings(settings) {
                   data["market_data"]["current_price"][
                     `${settingsInformation.activeFiatCurrency.toLowerCase()}`
                   ],
-                imageString: data["image"]["small"],
+                imageStringThumb: data["image"]["thumb"],
+                imageStringSmall: data["image"]["small"],
                 apiId: data["id"],
               };
               settingsInformation.supportedCryptoCurrencies.push(
@@ -221,32 +237,48 @@ function saveSettings(settings) {
               saveSettings(settingsInformation);
               CreateSupportedCryptoCurrencyContainer(newCurrencyToAdd);
               document.getElementById("addCryptocurrencyInput").value = "";
+              document.getElementById("suggestion-container").innerHTML = "";
             });
           } else if (res.status == 404) {
             document.getElementById("addCryptocurrencyInput").placeholder =
               "Could Not Find Coin. Try Again.";
             document.getElementById("addCryptocurrencyInput").value = "";
+            document.getElementById("suggestion-container").innerHTML = "";
           }
         })
         .catch((err) => {
           console.log(err);
         });
     });
-    $(".supportedCurrencyContainer").on("click", function () {
-      if ($(this).attr("id") == null) {
-        if ($(this).hasClass("active")) {
-          $(this).removeClass("active");
-          settingsInformation.supportedCryptoCurrencies.find(
-            (element) => element.name == $(this).attr("name")
-          ).active = "false";
-        } else {
-          $(this).addClass("active");
-          settingsInformation.supportedCryptoCurrencies.find(
-            (element) => element.name == $(this).attr("name")
-          ).active = "true";
-        }
-        saveSettings(settingsInformation);
+    $(".toggler").on("click", async function () {
+      if ($(this).hasClass("active")) {
+        $(this).removeClass("active");
+        settingsInformation.supportedCryptoCurrencies.find(
+          (element) => element.name == $(this).attr("name")
+        ).active = "false";
+        this.checked = false;
+      } else {
+        $(this).addClass("active");
+        settingsInformation.supportedCryptoCurrencies.find(
+          (element) => element.name == $(this).attr("name")
+        ).active = "true";
+        this.checked = true;
       }
+      saveSettings(settingsInformation);
+    });
+    $(".currencyDeleteButton").on("click", async function () {
+      var currency = settingsInformation.supportedCryptoCurrencies.find(
+        (element) => element.name == $(this).attr("name")
+      );
+      const index =
+        settingsInformation.supportedCryptoCurrencies.indexOf(currency);
+      if (index > -1) {
+        settingsInformation.supportedCryptoCurrencies.splice(index, 1);
+      }
+      this.parentElement.remove();
+      saveSettings(settingsInformation);
     });
   });
 })(jQuery);
+
+export default CreateSupportedCryptoCurrencyContainer(currency);
