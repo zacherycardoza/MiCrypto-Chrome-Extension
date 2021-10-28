@@ -1,9 +1,9 @@
 :root {
-  --main: #2e2738;
+  --main: #0f0a0a;
   --panelColor: rgb(0, 82, 102);
   --whitee: rgb(218, 216, 236);
   --activeGreen: rgb(0, 82, 102);
-  --darkcyan: #2e2738;
+  --suggestion: #bdbf09;
 }
 .developer {
   margin-top: 5px;
@@ -17,21 +17,21 @@ html {
   min-height: 300px;
   margin: 0;
   padding: 0;
-  background-color: var(--darkcyan);
+  background-color: var(--main);
 }
 body {
   font-family: "Inconsolata", monospace;
   margin: 0;
   padding: 0;
   width: 100%;
-  background-color: var(--darkcyan);
+  background-color: var(--main);
   color: var(--whitee);
   padding-bottom: 5px;
 }
 
 /* Header */
 #headerBox {
-  background-color: var(--darkcyan);
+  background-color: var(--main);
   display: grid;
   grid-template-rows: 1fr, 1fr;
   grid-template-columns: 1fr 5fr 1fr;
@@ -56,7 +56,7 @@ body {
   display: flex;
 }
 #headerSettingsIconContainer button {
-  background-color: var(--darkcyan);
+  background-color: var(--main);
   border: none;
   padding: 0;
   padding-top: 5px;
@@ -197,7 +197,7 @@ p {
   border: 1px solid var(--panelColor);
   background-color: var(--panelColor);
   padding: 5px 0px 0px 2px;
-  color: green;
+  color: var(--suggestion);
   z-index: 0;
   font-size: 17px;
 }
@@ -212,7 +212,7 @@ p {
   position: relative;
   display: inline-block;
   width: 60px;
-  height: 28px;
+  height: 26px;
 }
 
 /* Hide default HTML checkbox */
@@ -226,7 +226,7 @@ p {
 .slider {
   position: absolute;
   cursor: pointer;
-  top: 2px;
+  top: 4px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -238,8 +238,8 @@ p {
 .slider:before {
   position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
+  height: 22px;
+  width: 22px;
   left: 4px;
   background-color: var(--main);
   -webkit-transition: 0.4s;
@@ -247,11 +247,11 @@ p {
 }
 
 input:checked + .slider {
-  background-color: #2196f3;
+  background-color: var(--suggestion);
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196f3;
+  box-shadow: 0 0 1px var(--suggestion);
 }
 
 input:checked + .slider:before {
