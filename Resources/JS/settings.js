@@ -190,7 +190,6 @@ var topHundred;
         document.getElementById("suggestion-container").innerHTML = "";
         return;
       }
-      console.log(document.getElementById("addCryptocurrencyInput").value);
       fetch(
         "https://api.coingecko.com/api/v3/coins/" +
           `${document
@@ -200,7 +199,6 @@ var topHundred;
         .then((res) => {
           if (res.status == 200) {
             res.json().then((data) => {
-              console.log(data);
               var newCurrencyToAdd = {
                 name: data["name"],
                 symbol: data["symbol"].toUpperCase(),
@@ -259,7 +257,6 @@ var topHundred;
                       ).innerHTML = "";
                       return;
                     }
-                    console.log(data);
                     var newCurrencyToAdd = {
                       name: data["name"],
                       symbol: data["symbol"].toUpperCase(),

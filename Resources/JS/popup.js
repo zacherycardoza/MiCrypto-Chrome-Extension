@@ -86,7 +86,6 @@ function saveSettings(settings) {
         if (res.status == 200) {
           res.json().then((data) => {
             currency.lastPrice = currency.newPrice;
-            console.log(data);
             currency.newPrice = (
               Math.round(
                 data[`${currency.apiId}`][
@@ -191,7 +190,6 @@ function saveSettings(settings) {
           settingsInformation.supportedCryptoCurrencies.filter(
             (currency) => currency.active == "true"
           );
-        console.log(activeCurrencies);
         activeCurrencies.forEach((currency) => {
           walletTotalAmount += currency.amountOwned * currency.newPrice;
         });

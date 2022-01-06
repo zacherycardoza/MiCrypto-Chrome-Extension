@@ -8,12 +8,11 @@
 .developer {
   margin-top: 5px;
   margin-bottom: 5px;
-  position: fixed;
   bottom: 0;
   margin-left: 2.5%;
 }
 html {
-  width: 400px;
+  width: 375px;
   min-height: 300px;
   margin: 0;
   padding: 0;
@@ -49,6 +48,7 @@ body {
 #headerTextContainer {
   grid-column: 2 / span 1;
   grid-row: 1 / span 2;
+  padding-left: 10px;
 }
 #headerSettingsIconContainer {
   grid-column: 3 / span 1;
@@ -76,11 +76,13 @@ body {
 #supportedFiatCurrencyHeaderContainer {
   grid-column: 1 / span 6;
   grid-row: 1 / span 1;
+  font-size: 12.5px;
 }
 .supportedFiatCurrencyContainer {
   height: 15px;
   border-radius: 2px;
   color: var(--whitee);
+  font-size: 12.5px;
   width: 100%;
   text-align: center;
 }
@@ -104,7 +106,15 @@ body {
   grid-column: 1 / span 1;
   grid-row: 1 / span 1;
   width: 95%;
+  font-size: medium;
+  font-weight: bold;
 }
+#supportedFiatCurrencyHeaderContainer > h3,
+#supportedCryptocurrencyHeaderContainer > h3 {
+  margin: 5 0 0 0;
+  padding: 0;
+}
+
 .supportedCurrencyContainer {
   height: 60px;
   background-color: var(--panelColor);

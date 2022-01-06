@@ -5,7 +5,8 @@
   --whitee: rgb(218, 216, 236);
 }
 html {
-  width: 375px;
+  width: 325px;
+  height: 500px;
   margin: 0;
   padding: 0;
   background-color: var(--main);
@@ -61,7 +62,7 @@ p {
 #miCoinsHeaderContainer {
   padding: 0;
   display: grid;
-  grid-template-rows: 1fr, 1fr;
+  grid-template-rows: 1fr;
   grid-template-columns: 1fr 1fr 1.5fr 1.5fr;
   gap: 5px;
   width: 95%;
